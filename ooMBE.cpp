@@ -3698,9 +3698,35 @@ void ooMBE::adv_order_PIMBEA_local(int iA,
                 A_prime.emplace_back(u, adjIndexL[u]);
             }
 
-            A_prime.resize(size_of_L-iA_prime);
-            P_prime.resize(iB_prime-iP_prime);
-            Q_prime.resize(iP_prime-iQ_prime);
+
+            vector<pair<int, int>> B_prime;
+
+            for (int i=0; i<g.adjR.size(); i++) {
+                bool fd = true;
+                sort(g.adjR[i].begin(), g.adjR[i].end());
+                for (auto x:A_prime) {
+                    if (find(g.adjR[i].begin(), g.adjR[i].end(), x.first) == g.adjR[i].end()) {
+                        fd = false;
+                        break;
+                    }
+                }
+                if (fd) B_prime.push_back({i, 0});
+            }
+
+            if (A_prime.size() && B_prime.size()) {
+                // cout << "\nNEW CLIQUE "; // << iA_prime << ' ' << iQ_prime << ' ' << iP_prime << ' ' << iB_prime;
+                // cout << "\nA \n";
+                for (auto x:A_prime) cout << x.first + 1 << ',';
+                // cout << "\nB \n";
+                cout << "\t";
+                for (auto x:B_prime) cout << x.first + 1 << ',';
+                cout << "\n";
+                /* cout << "\nP \n";
+                for (auto x:P_prime) cout << x.first + 1 << ' ';
+                cout << "\nQ \n";
+                for (auto x:Q_prime) cout << x.first + 1 << ' '; */
+            }
+
 
             if(P_prime.size()>0){
                 //advIMBEA(iA_prime, iQ_prime, iP_prime, iB_prime, A_prime, P_prime, Q_prime);
@@ -4227,9 +4253,36 @@ void ooMBE::adv_mbeStart_reuse_full() {
         }
 
 
+        vector<pair<int, int>> B_prime;
+
+        for (int i=0; i<g.adjR.size(); i++) {
+            bool fd = true;
+            sort(g.adjR[i].begin(), g.adjR[i].end());
+            for (auto x:A_prime) {
+                if (find(g.adjR[i].begin(), g.adjR[i].end(), x.first) == g.adjR[i].end()) {
+                    fd = false;
+                    break;
+                }
+            }
+            if (fd) B_prime.push_back({i, 0});
+        }
+
+        if (A_prime.size() && B_prime.size()) {
+            // cout << "\nNEW CLIQUE "; // << iA_prime << ' ' << iQ_prime << ' ' << iP_prime << ' ' << iB_prime;
+            // cout << "\nA \n";
+            for (auto x:A_prime) cout << x.first + 1 << ',';
+            // cout << "\nB \n";
+            cout << "\t";
+            for (auto x:B_prime) cout << x.first + 1 << ',';
+            cout << "\n";
+            /* cout << "\nP \n";
+            for (auto x:P_prime) cout << x.first + 1 << ' ';
+            cout << "\nQ \n";
+            for (auto x:Q_prime) cout << x.first + 1 << ' '; */
+        }
+
 
         if(P_prime.size()>0){
-
             //advIMBEA(iA_prime, iQ_prime, iP_prime, iB_prime, A_prime, P_prime, Q_prime);
             adv_order_PIMBEA_local(iA_prime, iQ_prime, iP_prime, iB_prime, A_prime, P_prime, Q_prime);
         }

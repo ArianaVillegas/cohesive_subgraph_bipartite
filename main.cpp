@@ -48,7 +48,7 @@ int main() {
      * IM2 for IMDB large
      * LG for livejournal
      */
-    bg.readEdgeList("../IM2");
+    bg.readEdgeList("../ooni_russia.txt");
 
     //bgraph bg;
     //bg.readAdj(0,"../testLadj.txt");

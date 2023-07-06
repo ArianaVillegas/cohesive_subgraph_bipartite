@@ -9,7 +9,9 @@
 #include "BiCore.h"
 #include <utility>
 #include <functional>
+#include <algorithm>
 #include <chrono>
+
 using namespace std::chrono;
 /**
  * Assume the vertex set to be enumerated has been decided
@@ -33,6 +35,7 @@ public:
     bool maxPruning=true;
     vector<BFST> g_bfs;
     vector<bool> isPovit;
+    vector<int> nodes;
     ooMBE(bgraph &bg):g(bg){  nomb = 0;};
     int max_degree=0;
 
