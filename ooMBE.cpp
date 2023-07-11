@@ -1,8 +1,9 @@
-
+#include <vector>
+#include <algorithm>
 #include "ooMBE.h"
 
 
-
+std::vector<std::string> lines;
 
 
 
@@ -3713,14 +3714,20 @@ void ooMBE::adv_order_PIMBEA_local(int iA,
                 if (fd) B_prime.push_back({i, 0});
             }
 
-            if (A_prime.size() && B_prime.size()) {
+
+
+            // if (A_prime.size() && B_prime.size()) {
+            if (A_prime.size() && B_prime.size()){ // && (A_prime.size()>=10 || B_prime.size()>=10)) {
                 // cout << "\nNEW CLIQUE "; // << iA_prime << ' ' << iQ_prime << ' ' << iP_prime << ' ' << iB_prime;
-                // cout << "\nA \n";
-                for (auto x:A_prime) cout << x.first + 1 << ',';
-                // cout << "\nB \n";
-                cout << "\t";
-                for (auto x:B_prime) cout << x.first + 1 << ',';
-                cout << "\n";
+                std::string new_str = "";
+                for (auto x:A_prime) new_str += std::to_string(int(x.first)) + ","; // cout << x.first + 1 << ',';
+                // cout << "\t";
+                new_str += "\t";
+                for (auto x:B_prime) new_str += std::to_string(int(x.first)) + ","; // cout << x.first + 1 << ',';
+                if (std::find(lines.begin(), lines.end(), new_str) == lines.end()) {
+                    cout << new_str << "\n";
+                    lines.push_back(new_str);
+                }
                 /* cout << "\nP \n";
                 for (auto x:P_prime) cout << x.first + 1 << ' ';
                 cout << "\nQ \n";
@@ -4267,14 +4274,17 @@ void ooMBE::adv_mbeStart_reuse_full() {
             if (fd) B_prime.push_back({i, 0});
         }
 
-        if (A_prime.size() && B_prime.size()) {
+        if (A_prime.size() && B_prime.size()) { // && (A_prime.size()>=10 || B_prime.size()>=10)) {
             // cout << "\nNEW CLIQUE "; // << iA_prime << ' ' << iQ_prime << ' ' << iP_prime << ' ' << iB_prime;
-            // cout << "\nA \n";
-            for (auto x:A_prime) cout << x.first + 1 << ',';
-            // cout << "\nB \n";
-            cout << "\t";
-            for (auto x:B_prime) cout << x.first + 1 << ',';
-            cout << "\n";
+            std::string new_str = "";
+            for (auto x:A_prime) new_str += std::to_string(int(x.first)) + ","; // cout << x.first + 1 << ',';
+            // cout << "\t";
+            new_str += "\t";
+            for (auto x:B_prime) new_str += std::to_string(int(x.first)) + ","; // cout << x.first + 1 << ',';
+            if (std::find(lines.begin(), lines.end(), new_str) == lines.end()) {
+                cout << new_str << "\n";
+                lines.push_back(new_str);
+            }
             /* cout << "\nP \n";
             for (auto x:P_prime) cout << x.first + 1 << ' ';
             cout << "\nQ \n";
